@@ -843,7 +843,7 @@ object into an array of letters -- and you can do this with NumPy:
 >>> import numpy as np
 >>> from Bio import AlignIO
 >>> alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
->>> align_array = np.array([list(rec) for rec in alignment], np.character)
+>>> align_array = np.array([list(rec) for rec in alignment], bytes)
 >>> print("Array shape %i by %i" % align_array.shape)
 Array shape 7 by 52
 \end{minted}
