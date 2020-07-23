@@ -157,6 +157,7 @@ FAADDATSQAKAAFDSLTAQATEMSGYAWALVVLVVGATVGIKLFKKFVSRA
 
 \noindent Note the website should have an option about showing gaps as periods (dots) or dashes, we've shown dashes above.  Assuming you download and save this as file ``PF05371\_seed.faa'' then you can load it with almost exactly the same code:
 
+%not a doctest - PF05371_seed.faa not included in examples
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> alignment = AlignIO.read("PF05371_seed.faa", "fasta")
@@ -222,6 +223,7 @@ Epsilon   CAAACC
 
 If you wanted to read this in using \verb|Bio.AlignIO| you could use:
 
+%not a doctest - file resampled.phy not included in examples
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> alignments = AlignIO.parse("resampled.phy", "phylip")
@@ -268,6 +270,7 @@ CAAACC Epsilon
 As with the function \verb|Bio.SeqIO.parse()|, using \verb|Bio.AlignIO.parse()| returns an iterator.
 If you want to keep all the alignments in memory at once, which will allow you to access them in any order, then turn the iterator into a list:
 
+%not a doctest - file resampled.phy not included in examples
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> alignments = list(AlignIO.parse("resampled.phy", "phylip"))
@@ -340,6 +343,7 @@ One example of this is a collection of pairwise alignments, which can be produce
 To interpret these FASTA examples as several separate alignments, we can use \verb|Bio.AlignIO.parse()| with the optional \verb|seq_count| argument which specifies how many sequences are expected in each alignment (in these examples, 3, 2 and 2 respectively).
 For example, using the third example as the input data:
 
+%not a doctest
 \begin{minted}{pycon}
 >>> for alignment in AlignIO.parse(handle, "fasta", seq_count=2):
 ...     print("Alignment length %i" % alignment.get_alignment_length())
@@ -410,9 +414,11 @@ Note we create some \verb|SeqRecord| objects to construct the alignment from.
 
 \noindent Now we have a list of \verb|Alignment| objects, we'll write them to a PHYLIP format file:
 
+%cont-doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> AlignIO.write(my_alignments, "my_example.phy", "phylip")
+3
 \end{minted}
 
 \noindent And if you open this file in your favourite text editor it should look like this:
