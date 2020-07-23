@@ -456,6 +456,7 @@ in the same way as converting between sequence file formats with \verb|Bio.SeqIO
 
 For this example, we'll load the PFAM/Stockholm format file used earlier and save it as a Clustal W format file:
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> count = AlignIO.convert("PF05371_seed.sth", "stockholm", "PF05371_seed.aln", "clustal")
@@ -465,6 +466,7 @@ Converted 1 alignments
 
 Or, using \verb|Bio.AlignIO.parse()| and \verb|Bio.AlignIO.write()|:
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> alignments = AlignIO.parse("PF05371_seed.sth", "stockholm")
@@ -477,10 +479,12 @@ The \verb|Bio.AlignIO.write()| function expects to be given multiple alignment o
 
 In this case, we know there is only one alignment in the file so we could have used \verb|Bio.AlignIO.read()| instead, but notice we have to pass this alignment to \verb|Bio.AlignIO.write()| as a single element list:
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
 >>> AlignIO.write([alignment], "PF05371_seed.aln", "clustal")
+1
 \end{minted}
 
 Either way, you should end up with the same new Clustal W format file ``PF05371\_seed.aln'' with the following content:
@@ -508,6 +512,7 @@ COATB_BPIF1/22-73                   RA
 
 Alternatively, you could make a PHYLIP format file which we'll name ``PF05371\_seed.phy'':
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> AlignIO.convert("PF05371_seed.sth", "stockholm", "PF05371_seed.phy", "phylip")
@@ -540,6 +545,7 @@ In this example, as you can see the resulting names are still unique -
 but they are not very readable. As a result, a more relaxed variant of
 the original PHYLIP format is now quite widely used:
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> AlignIO.convert("PF05371_seed.sth", "stockholm", "PF05371_seed.phy", "phylip-relaxed")
@@ -571,6 +577,7 @@ If you have to work with the original strict PHYLIP format, then you may need to
 compress the identifiers somehow -- or assign your own names or numbering system.
 This following bit of code manipulates the record identifiers before saving the output:
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
@@ -624,6 +631,7 @@ The \verb|Bio.AlignIO| interface is based on handles, which means if you want to
 However, you will probably prefer to call Python's built-in \verb|format| function on the alignment object.
 This takes an output format specification as a single argument, a lower case string which is supported by \verb|Bio.AlignIO| as an output format.  For example:
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> alignment = AlignIO.read("PF05371_seed.sth", "stockholm")
@@ -644,6 +652,7 @@ As described in Section~\ref{sec:SeqRecord-format}, the \verb|SeqRecord| object 
 Internally \verb|format| is calling \verb|Bio.AlignIO.write()| with a \verb|StringIO| handle.  You can do this in your own code if for example you are using an
 older version of Biopython:
 
+%doctest
 \begin{minted}{pycon}
 >>> from io import StringIO
 >>> from Bio import AlignIO
