@@ -1320,7 +1320,7 @@ any standard input as a big string, \texttt{muscle\_cline(stdin=...)}. So,
 provided your data isn't very big, you can prepare the FASTA input in memory as
 a string using \texttt{StringIO} (see Section~\ref{sec:appendix-handles}):
 
-%doctest
+%cont-doctest
 \begin{minted}{pycon}
 >>> from Bio import SeqIO
 >>> records = (r for r in SeqIO.parse("opuntia.fasta", "fasta") if len(r) < 900)
@@ -1333,7 +1333,7 @@ a string using \texttt{StringIO} (see Section~\ref{sec:appendix-handles}):
 
 \noindent You can then run the tool and parse the alignment as follows:
 
-%doctest
+%cont-doctest
 \begin{minted}{pycon}
 >>> stdout, stderr = muscle_cline(stdin=data)
 >>> from Bio import AlignIO
