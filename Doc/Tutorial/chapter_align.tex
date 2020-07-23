@@ -851,8 +851,9 @@ Array shape 7 by 52
 If you will be working heavily with the columns, you can tell NumPy to store
 the array by column (as in Fortran) rather than its default of by row (as in C):
 
+%cont-doctest
 \begin{minted}{pycon}
->>> align_array = np.array([list(rec) for rec in alignment], np.character, order="F")
+>>> align_array = np.array([list(rec) for rec in alignment], bytes, order="F")
 \end{minted}
 
 Note that this leaves the original Biopython alignment object and the NumPy array
@@ -1182,6 +1183,7 @@ If we run this via the wrapper, we get back the output as a string. In order
 to parse this we can use \verb|StringIO| to turn it into a handle.
 Remember that MUSCLE defaults to using FASTA as the output format:
 
+%doctest
 \begin{minted}{pycon}
 >>> from Bio.Align.Applications import MuscleCommandline
 >>> muscle_cline = MuscleCommandline(input="opuntia.fasta")
@@ -1205,6 +1207,7 @@ text the fact that all of stdout and stderr is loaded into memory as a string ca
 be a potential drawback. Using the \verb|subprocess| module we can work directly
 with handles instead:
 
+%doctest
 \begin{minted}{pycon}
 >>> import subprocess
 >>> from Bio.Align.Applications import MuscleCommandline
@@ -1249,7 +1252,7 @@ Then we create the MUSCLE command line, leaving the input and output to their
 defaults (stdin and stdout). I'm also going to ask for strict ClustalW format
 as for the output.
 
-%doctest
+%cont-doctest
 \begin{minted}{pycon}
 >>> from Bio.Align.Applications import MuscleCommandline
 >>> muscle_cline = MuscleCommandline(clwstrict=True)
@@ -1259,10 +1262,11 @@ muscle -clwstrict
 
 Now for the fiddly bits using the \verb|subprocess| module, stdin and stdout:
 
+%cont-doctest
 \begin{minted}{pycon}
 >>> import subprocess
 >>> import sys
->>> child = subprocess.Popen(str(cline),
+>>> child = subprocess.Popen(str(muscle_cline),
 ...                          stdin=subprocess.PIPE,
 ...                          stdout=subprocess.PIPE,
 ...                          stderr=subprocess.PIPE,
@@ -1273,6 +1277,7 @@ Now for the fiddly bits using the \verb|subprocess| module, stdin and stdout:
 That should start MUSCLE, but it will be sitting waiting for its FASTA input
 sequences, which we must supply via its stdin handle:
 
+%cont-doctest
 \begin{minted}{pycon}
 >>> SeqIO.write(records, child.stdin, "fasta")
 6
@@ -1284,6 +1289,7 @@ to see if that is all the FASTA sequences or not -- so we must signal that
 this is all the input data by closing the handle. At that point MUSCLE should
 start to run, and we can ask for the output:
 
+%cont-doctest
 \begin{minted}{pycon}
 >>> from Bio import AlignIO
 >>> align = AlignIO.read(child.stdout, "clustal")
@@ -1327,7 +1333,7 @@ a string using \texttt{StringIO} (see Section~\ref{sec:appendix-handles}):
 
 \noindent You can then run the tool and parse the alignment as follows:
 
-%not a doctest as can't assume the MUSCLE binary is present
+%doctest
 \begin{minted}{pycon}
 >>> stdout, stderr = muscle_cline(stdin=data)
 >>> from Bio import AlignIO
